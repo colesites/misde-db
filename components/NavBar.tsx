@@ -35,7 +35,7 @@ const NavBar = () => {
           <Button asChild variant="outline" className="mr-2">
             <Link href="/login">Login</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="bg-gradient-to-r from-red-500 to-yellow-500">
             <Link href="/register">Register</Link>
           </Button>
         </div>
@@ -61,7 +61,7 @@ const NavBar = () => {
                 <Button asChild variant="outline" className="w-full">
                   <Link href="/login">Login</Link>
                 </Button>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full bg-gradient-to-r from-red-500 to-yellow-500">
                   <Link href="/register">Register</Link>
                 </Button>
               </div>

@@ -28,13 +28,13 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           Modern Integrated State <br className="hidden md:inline" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-500">
             Digital Ecosystem
           </span>
         </motion.h1>
 
         <motion.p
-          className="max-w-3xl text-muted-foreground mb-10 text-lg"
+          className="max-w-3xl text-black mb-10 text-lg"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -50,7 +50,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <Button asChild size="lg" className="gap-2">
+          <Button asChild size="lg" className="gap-2 bg-gradient-to-r from-red-500 to-yellow-500">
             <Link href="/register">
               Create Account <ArrowRight className="h-4 w-4" />
             </Link>
@@ -68,38 +68,38 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.8 }}
         >
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100 text-red-500 mb-4">
               <Database className="h-6 w-6" />
             </div>
             <h3 className="font-medium mb-2">Digital Archive</h3>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-black text-center">
               Digitized government documents and research papers
             </p>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-100 text-green-500 mb-4">
               <Search className="h-6 w-6" />
             </div>
             <h3 className="font-medium mb-2">AI-Powered Search</h3>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-black text-center">
               Find exactly what you need with semantic search
             </p>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-100 text-blue-500 mb-4">
               <Sparkles className="h-6 w-6" />
             </div>
             <h3 className="font-medium mb-2">Smart Analytics</h3>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-black text-center">
               AI-driven insights from government data
             </p>
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-yellow-100 text-yellow-500 mb-4">
               <Shield className="h-6 w-6" />
             </div>
             <h3 className="font-medium mb-2">Public Access</h3>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm text-black text-center">
               Citizens can access and read public documents
             </p>
           </div>
