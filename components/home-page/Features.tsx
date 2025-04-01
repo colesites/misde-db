@@ -27,7 +27,7 @@ const Features = () => {
       </div>
 
       {/* AI Features */}
-      <div className="bg-gradient-to-r from-blue-100 to-yellow-100 py-12 md:py-24">
+      {/* <div className="bg-gradient-to-r from-blue-100 to-yellow-100 py-12 md:py-24">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-extrabold tracking-tight mb-4 text-green-600">
@@ -87,11 +87,10 @@ const Features = () => {
               </Card>
             </div>
 
-            {/* AI Chat Demo */}
             <AIChatbot />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
