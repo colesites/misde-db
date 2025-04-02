@@ -36,7 +36,7 @@ export const ParallaxScrollSecond = ({
   return (
     <div
       className={cn(
-        "h-[40rem] items-start overflow-y-auto w-full hide-scrollbar",
+        "h-[40rem] items-start overflow-y-auto overflow-x-hidden w-full hide-scrollbar",
         className
       )}
       ref={gridRef}
