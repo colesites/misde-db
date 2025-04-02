@@ -27,9 +27,10 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Modern Integrated State <br className="hidden md:inline" />
+          Ministry of Innovation, Science and{" "}
+          <br className="hidden md:inline" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-500">
-            Digital Ecosystem
+            Digital Economy
           </span>
         </motion.h1>
 
@@ -50,7 +51,11 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <Button asChild size="lg" className="gap-2 bg-gradient-to-r from-red-500 to-yellow-500">
+          <Button
+            asChild
+            size="lg"
+            className="gap-2 bg-gradient-to-r from-red-500 to-yellow-500"
+          >
             <Link href="/register">
               Create Account <ArrowRight className="h-4 w-4" />
             </Link>
