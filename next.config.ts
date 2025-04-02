@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["placeholder.co"],
+    domains: ["placeholder.co", "images.unsplash.com", "plus.unsplash.com", "unsplash.com"],
   },
 
   eslint: {

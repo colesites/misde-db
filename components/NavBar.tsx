@@ -25,13 +25,15 @@ const NavBar = () => {
           <Database className="h-6 w-6" />
           <span className="text-lg md:text-xl font-bold">MISDE Database</span>
         </div>
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-6">
           <Link href="/" className="text-sm font-medium hover:text-primary">Home</Link>
-          <Link href="#features" className="text-sm font-medium hover:text-primary">Features</Link>
+          <Link href="#innovation" className="text-sm font-medium hover:text-primary">Innovation</Link>
+          <Link href="#science" className="text-sm font-medium hover:text-primary">Science</Link>
+          <Link href="#digital-economy" className="text-sm font-medium hover:text-primary">Digital Economy</Link>
           <Link href="#events" className="text-sm font-medium hover:text-primary">Events</Link>
           <Link href="#contact" className="text-sm font-medium hover:text-primary">Contact</Link>
         </nav>
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Button asChild variant="outline" className="mr-2">
             <Link href="/login">Login</Link>
           </Button>
@@ -39,7 +41,7 @@ const NavBar = () => {
             <Link href="/register">Register</Link>
           </Button>
         </div>
-        <div className="block md:hidden">
+        <div className="block lg:hidden">
           <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger>
               <Menu className="cursor-pointer" />
@@ -47,7 +49,9 @@ const NavBar = () => {
             <DropdownMenuContent className="w-56 mr-10 flex flex-col items-center space-y-2 p-4">
               {[
                 { href: "/", label: "Home" },
-                { href: "#features", label: "Features" },
+                { href: "#innovation", label: "Innovation" },
+                { href: "#science", label: "Science" },
+                { href: "#digital-economy", label: "Digital Economy" },
                 { href: "#events", label: "Events" },
                 { href: "#contact", label: "Contact" },
               ].map(({ href, label }) => (

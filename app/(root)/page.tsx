@@ -1,7 +1,10 @@
 import HeroSection from "@/components/home-page/HeroSection";
-import Features from "@/components/home-page/Features";
 import Events from "@/components/home-page/Events";
 import { DotBackground } from "@/components/home-page/DotBackground";
+import Innovation from "@/components/home-page/Innovation";
+import Science from "@/components/home-page/Science";
+import DigitalEconomy from "@/components/home-page/DigitalEconomy";
+import Contact from "@/components/home-page/Contact";
 
 export default function Home() {
   return (
@@ -11,14 +14,22 @@ export default function Home() {
         <HeroSection />
       </DotBackground>
 
-      {/* Features */}
-      <Features />
+      {/* <Features /> */}
+
+      {/* Innovation */}
+      <Innovation />
+
+      {/* Science */}
+      <Science />
+
+      {/* DigitalEconomy */}
+      <DigitalEconomy />
 
       {/* Events Section */}
       <Events />
 
-      {/* TODO: Make Contact Section Component */}
       {/* Contact Section */}
+      <Contact />
     </section>
   );
 }
