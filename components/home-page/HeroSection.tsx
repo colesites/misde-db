@@ -30,7 +30,7 @@ export default function HeroSection() {
           Ministry of Innovation, Science and{" "}
           <br className="hidden md:inline" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-500">
-            Digital Economy
+            Digital Economy
           </span>
         </motion.h1>
 

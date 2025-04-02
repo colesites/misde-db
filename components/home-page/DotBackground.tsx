@@ -5,7 +5,7 @@ import React from "react";
 export function DotBackground({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex min-h-[50rem] w-full items-center justify-center bg-gradient-to-b from-white to-gray-200 dark:bg-black ">
-      <Image src="/home-banner.jpg" fill alt="Home Banner" className="object-cover opacity-40" />
+      <Image src="/home-banner.jpg" fill alt="Home Banner" className="object-cover opacity-40" quality={100} priority />
       <div
         className={cn(
           "absolute inset-0",
