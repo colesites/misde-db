@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "MISDE Database - Government Digital Ecosystem",
   description:
-    "Ministry of Innovation, Science and Digital Economy",
+    "Ministry of Innovation, Science and Digital Economy",
 };
 
 export default function RootLayout({
