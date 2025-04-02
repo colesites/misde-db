@@ -25,4 +25,6 @@ const images = [
   "/vision-2.jpeg",
   "/vision.jpeg",
   "/yip-2.jpeg",
+  "/yip-2.jpeg",
+  "/yip-2.jpeg",
 ];
