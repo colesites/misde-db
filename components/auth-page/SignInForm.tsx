@@ -3,7 +3,7 @@
 import { Database, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState, useTransition } from "react";
 import {
   Card,
   CardContent,
@@ -16,17 +16,19 @@ import { ShineBorder } from "../ui/shimer-border";
 import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import type * as z from "zod";
 import { SignInFormSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import FormFields from "./FormFields";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { signin } from "@/actions/signin";
 
 const SignInForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const formSchema = SignInFormSchema();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,8 +39,9 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
-    router.push("/dashboard");
+    startTransition(() => {
+      signin(values);
+    })
   };
 
   return (
@@ -93,8 +96,12 @@ const SignInForm = () => {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col">
-              <Button className="w-full cursor-pointer bg-[#A07CFE] hover:bg-[#A07CFE]/90" type="submit" disabled={isLoading}>
-                {isLoading ? "Loading..." : "Login"}
+              <Button
+                className="w-full cursor-pointer bg-[#A07CFE] hover:bg-[#A07CFE]/90"
+                type="submit"
+                disabled={isPending}
+              >
+                {isPending ? "Loading..." : "Login"}
               </Button>
               <p className="mt-4 text-center text-sm text-muted-foreground">
                 Don't have an account?{" "}

@@ -4,38 +4,41 @@ import React from "react";
 import { FeatureCard } from "./FeatureCard";
 import { AnimatedInnovationsCard } from "./AnimatedInnovationsCard";
 import { FocusCardsDemo } from "./FocusCardSDemo";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 const Innovation = () => {
   return (
     <>
       <div id="innovation" className="container mx-auto py-12 md:py-24">
-        <div className="text-center space-y-12">
+        <div className="text-center space-y-20">
           <div>
-            <h2 className="text-4xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-red-500">
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-red-500">
               Innovation
             </h2>
 
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-20">
               Unleashing Creativity through the Power of Innovation. Discover
               new tools, collaborate with fellow creators, and turn your ideas
-              into reality
+              into reality.
             </p>
+
+            <FeatureCard />
           </div>
 
           <div>
-            <h3 className="mb-12 text-3xl font-extrabold tracking-tight bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
+            <h3 className="mb-12 text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
               Mind Behind Ekiti Innovation
             </h3>
 
             <FocusCardsDemo />
           </div>
-          <h3 className="text-3xl mt-22 font-extrabold tracking-tight bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
-            Top Innovations
-          </h3>
-          
-          <AnimatedInnovationsCard />
-          <div>
 
+          <div>
+            <h3 className="text-2xl md:text-3xl mb-12 font-extrabold tracking-tight bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
+              Top Innovations
+            </h3>
+
+            <AnimatedInnovationsCard />
           </div>
         </div>
         {/* <FeatureCard /> */}

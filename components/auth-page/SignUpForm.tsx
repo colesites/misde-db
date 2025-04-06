@@ -1,9 +1,9 @@
 "use client";
 
-import { Database, Lock, UserPlus } from "lucide-react";
+import { Database, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useTransition, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,38 +13,49 @@ import {
   CardTitle,
 } from "../ui/card";
 import { ShineBorder } from "../ui/shimer-border";
-import { Form, FormLabel } from "../ui/form";
+import { Form } from "../ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { SignUpFormSchema } from "@/schemas";
+import type * as z from "zod";
+import { SignUpFormSchema, OfficialSignUpFormSchema } from "@/schemas";
 import { useRouter } from "next/navigation";
 import FormFields from "./FormFields";
 import { Button } from "../ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import { toast } from "sonner";
+import SelectFormField from "./SelectFormField";
+import bcrypt from "bcryptjs";
+import { registerOfficial, registerUser } from "@/actions/register";
 
 const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const [userType, setUserType] = useState("public");
-  const [formData, setFormData] = useState({
-    department: "",
-  });
 
   const router = useRouter();
-  const formSchema = SignUpFormSchema();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  // Create two separate form instances
+  const publicFormSchema = SignUpFormSchema();
+  const officialFormSchema = OfficialSignUpFormSchema();
+
+  // Form for public users
+  const formPublic = useForm<z.infer<typeof publicFormSchema>>({
+    resolver: zodResolver(publicFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  // Form for official users
+  const formOfficial = useForm<z.infer<typeof officialFormSchema>>({
+    resolver: zodResolver(officialFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      department: "",
       position: "",
       email: "",
       password: "",
@@ -52,13 +63,36 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
-    router.push("/dashboard");
+  // Define department options
+  const departmentOptions = [
+    { value: "administration", label: "Administration" },
+    { value: "finance", label: "Finance" },
+    { value: "health", label: "Health" },
+    { value: "education", label: "Education" },
+    { value: "agriculture", label: "Agriculture" },
+    { value: "infrastructure", label: "Infrastructure" },
+    { value: "technology", label: "Technology" },
+  ];
+
+  // Submit handler for public users
+  const onSubmitPublic = async (values: z.infer<typeof publicFormSchema>) => {
+    startTransition(() => {
+      registerUser(values);
+    });
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // Submit handler for official users
+  const onSubmitOfficial = async (
+    values: z.infer<typeof officialFormSchema>
+  ) => {
+    startTransition(() => {
+      registerOfficial(values);
+    });
+  };
+
+  // Handle user type change
+  const handleUserTypeChange = (value: string) => {
+    setUserType(value);
   };
 
   return (
@@ -87,7 +121,7 @@ const SignUpForm = () => {
           </CardDescription>
         </CardHeader>
 
-        <Tabs defaultValue="public" onValueChange={setUserType}>
+        <Tabs defaultValue="public" onValueChange={handleUserTypeChange}>
           <div className="px-6 pt-2">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="public">Public User</TabsTrigger>
@@ -95,74 +129,37 @@ const SignUpForm = () => {
             </TabsList>
           </div>
 
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <FormFields
-                    control={form.control}
-                    name="firstName"
-                    label="First name"
-                    placeholder="John"
-                  />
+          {/* Public User Form */}
+          <TabsContent value="public">
+            <Form {...formPublic}>
+              <form
+                onSubmit={formPublic.handleSubmit(onSubmitPublic)}
+                className="space-y-10"
+              >
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormFields
+                      control={formPublic.control}
+                      name="firstName"
+                      label="First name"
+                      placeholder="John"
+                    />
 
-                  <FormFields
-                    control={form.control}
-                    name="lastName"
-                    label="Last name"
-                    placeholder="Doe"
-                  />
-                </div>
-
-                <FormFields
-                  control={form.control}
-                  name="email"
-                  label="Email"
-                  placeholder={
-                    userType === "official"
-                      ? "name@department.gov.ng"
-                      : "name@example.com"
-                  }
-                />
-
-                <TabsContent value="official" className="space-y-4 mt-0 p-0">
-                  <div className="space-y-2">
-                    <FormLabel>Department</FormLabel>
-                    <Select
-                      value={formData.department}
-                      onValueChange={(value) =>
-                        handleSelectChange("department", value)
-                      }
-                      required={userType === "official"}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="administration">
-                          Administration
-                        </SelectItem>
-                        <SelectItem value="finance">Finance</SelectItem>
-                        <SelectItem value="health">Health</SelectItem>
-                        <SelectItem value="education">Education</SelectItem>
-                        <SelectItem value="agriculture">Agriculture</SelectItem>
-                        <SelectItem value="infrastructure">
-                          Infrastructure
-                        </SelectItem>
-                        <SelectItem value="technology">Technology</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormFields
+                      control={formPublic.control}
+                      name="lastName"
+                      label="Last name"
+                      placeholder="Doe"
+                    />
                   </div>
 
                   <FormFields
-                    control={form.control}
-                    name="position"
-                    label="Position"
-                    placeholder="Your official position"
+                    control={formPublic.control}
+                    name="email"
+                    label="Email"
+                    placeholder="name@example.com"
                   />
-                </TabsContent>
 
-                <TabsContent value="public" className="mt-0 p-0">
                   <div className="rounded-md bg-muted p-3 text-sm">
                     <p>
                       As a public user, you'll have access to read public
@@ -170,49 +167,131 @@ const SignUpForm = () => {
                       create, edit, or delete documents.
                     </p>
                   </div>
-                </TabsContent>
 
-                <FormFields
-                  control={form.control}
-                  name="password"
-                  label="Password"
-                  placeholder="............"
-                  type="password"
-                />
+                  <FormFields
+                    control={formPublic.control}
+                    name="password"
+                    label="Password"
+                    placeholder="............"
+                    type="password"
+                  />
 
-                <FormFields
-                  control={form.control}
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  placeholder="............"
-                  type="password"
-                />
-              </CardContent>
+                  <FormFields
+                    control={formPublic.control}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    placeholder="............"
+                    type="password"
+                  />
+                </CardContent>
 
-              <CardFooter className="flex flex-col">
-                <Button
-                  className="w-full cursor-pointer bg-[#A07CFE] hover:bg-[#A07CFE]/90"
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  {isLoading
-                    ? "Loading..."
-                    : userType === "official"
-                    ? "Submit Request"
-                    : "Create Account"}
-                </Button>
-                <p className="mt-4 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
-                  <Link
-                    href="/login"
-                    className="text-primary underline-offset-4 hover:underline"
+                <CardFooter className="flex flex-col">
+                  <Button
+                    className="w-full cursor-pointer bg-[#A07CFE] hover:bg-[#A07CFE]/90"
+                    type="submit"
+                    disabled={isPending}
                   >
-                    Sign In
-                  </Link>
-                </p>
-              </CardFooter>
-            </form>
-          </Form>
+                    {isPending ? "Loading..." : "Create Account"}
+                  </Button>
+                  <p className="mt-4 text-center text-sm text-muted-foreground">
+                    Already have an account?{" "}
+                    <Link
+                      href="/login"
+                      className="text-primary underline-offset-4 hover:underline"
+                    >
+                      Sign In
+                    </Link>
+                  </p>
+                </CardFooter>
+              </form>
+            </Form>
+          </TabsContent>
+
+          {/* Official User Form */}
+          <TabsContent value="official">
+            <Form {...formOfficial}>
+              <form
+                onSubmit={formOfficial.handleSubmit(onSubmitOfficial)}
+                className="space-y-10"
+              >
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormFields
+                      control={formOfficial.control}
+                      name="firstName"
+                      label="First name"
+                      placeholder="John"
+                    />
+
+                    <FormFields
+                      control={formOfficial.control}
+                      name="lastName"
+                      label="Last name"
+                      placeholder="Doe"
+                    />
+                  </div>
+
+                  <FormFields
+                    control={formOfficial.control}
+                    name="email"
+                    label="Email"
+                    placeholder="name@department.gov.ng"
+                  />
+
+                  <SelectFormField
+                    control={formOfficial.control}
+                    name="department"
+                    label="Department"
+                    placeholder="Select your department"
+                    options={departmentOptions}
+                    required={true}
+                  />
+
+                  <FormFields
+                    control={formOfficial.control}
+                    name="position"
+                    label="Position"
+                    placeholder="Your official position"
+                  />
+
+                  <FormFields
+                    control={formOfficial.control}
+                    name="password"
+                    label="Password"
+                    placeholder="............"
+                    type="password"
+                  />
+
+                  <FormFields
+                    control={formOfficial.control}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    placeholder="............"
+                    type="password"
+                  />
+                </CardContent>
+
+                <CardFooter className="flex flex-col">
+                  <Button
+                    className="w-full cursor-pointer bg-[#A07CFE] hover:bg-[#A07CFE]/90"
+                    type="submit"
+                    disabled={isPending}
+                  >
+                    {isPending ? "Loading..." : "Submit Request"}
+                  </Button>
+                  <p className="mt-4 text-center text-sm text-muted-foreground">
+                    Already have an account?{" "}
+                    <Link
+                      href="/login"
+                      className="text-primary underline-offset-4 hover:underline"
+                    >
+                      Sign In
+                    </Link>
+                  </p>
+                </CardFooter>
+              </form>
+            </Form>
+          </TabsContent>
         </Tabs>
       </Card>
     </section>

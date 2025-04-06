@@ -16,7 +16,7 @@ const Events = () => {
   return (
     <div id="events" className="container mx-auto py-12 md:py-24">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-300">
+        <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-300">
           Events
         </h2>
         <p className="text-muted-foreground max-w-3xl mx-auto">
