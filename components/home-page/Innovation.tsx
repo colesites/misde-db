@@ -4,7 +4,6 @@ import React from "react";
 import { FeatureCard } from "./FeatureCard";
 import { AnimatedInnovationsCard } from "./AnimatedInnovationsCard";
 import { FocusCardsDemo } from "./FocusCardSDemo";
-import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 const Innovation = () => {
   return (
@@ -41,7 +40,6 @@ const Innovation = () => {
             <AnimatedInnovationsCard />
           </div>
         </div>
-        {/* <FeatureCard /> */}
       </div>
 
       {/* AI Features */}
