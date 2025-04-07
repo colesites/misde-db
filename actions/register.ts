@@ -1,13 +1,13 @@
 "use server";
 
 import { z } from "zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { prisma } from "../lib/db";
 import {
   OfficialSignUpFormSchema,
-  SignInFormSchema,
   SignUpFormSchema,
 } from "@/schemas";
+import { getUserByEmail } from "@/data/user";
 
 const signupFormSchema = SignUpFormSchema();
 const officialFormSchema = OfficialSignUpFormSchema();
@@ -32,11 +32,7 @@ export const registerUser = async (
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
     throw new Error("Email already in use");

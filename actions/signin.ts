@@ -1,59 +1,38 @@
-// "use server";
-
-// import * as z from "zod";
-// import { SignInFormSchema } from "@/schemas";
-// import { signIn } from "@/auth";
-// import { AuthError } from "next-auth";
-
-// const formSchema = SignInFormSchema();
-
-// export const signin = async (values: z.infer<typeof formSchema>) => {
-//   const validatedFields = await formSchema.safeParseAsync(values);
-
-//   if (!validatedFields.success) {
-//     return { error: "Invalid fields!" };
-//   }
-
-//   const { email, password } = validatedFields.data;
-
-//   try {
-//     await signIn("credentials", {
-//       email,
-//       password,
-//       redirectTo: "/dashboard",
-//     });
-//   } catch (error) {
-//     if (error instanceof AuthError) {
-//       switch (error.type) {
-//         case "CredentialsSignin":
-//           return { error: "Invalid email or password!" };
-//         default:
-//           return { error: "Something went wrong! Please try again." };
-//       }
-//     }
-//     throw error;
-//   }
-// };
 "use server";
 
 import { SignInFormSchema } from "@/schemas";
 import { z } from "zod";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
-const formSchema = SignInFormSchema();
+const signinFormSchema = SignInFormSchema();
 
-export const signin = async (values: z.infer<typeof formSchema>) => {
-  const validatedFields = await formSchema.spa(values);
+export const signin = async (values: z.infer<typeof signinFormSchema>) => {
+  const validatedFields = signinFormSchema.safeParse(values);
 
-  if (!validatedFields) {
-    throw new Error("Invalid Fields")
+  if (!validatedFields.success) {
+    throw new Error("Invalid Fields");
   }
 
-  
-  // toast("Login Successful")
+  const { email, password } = validatedFields.data;
 
   try {
-    // Successful login will redirect via the server action
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
   } catch (error) {
-  } finally {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          throw new Error("Invalid credentials");
+        default:
+          throw new Error("Something went wrong!");
+      }
+    }
+
+    throw error;
   }
 };
