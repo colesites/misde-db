@@ -22,13 +22,13 @@ import { useRouter } from "next/navigation";
 import FormFields from "./FormFields";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { signin } from "@/actions/signin";
+// import { signin } from "@/actions/signin";
 
 const SignInForm = () => {
   const [isPending, startTransition] = useTransition();
   const formSchema = SignInFormSchema();
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,9 +39,10 @@ const SignInForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    startTransition(() => {
-      signin(values);
-    })
+    // startTransition(() => {
+    //   signin(values);
+    // })
+    router.push("/dashboard");
   };
 
   return (

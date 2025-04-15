@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { documents } from "@/lib/mock-data";
 import { users } from "@/lib/mock-data";
+import { useSession } from "next-auth/react";
 
 // Get recent documents and sort by updatedAt
 const recentDocuments = [...documents]
@@ -36,7 +37,27 @@ const recentDocuments = [...documents]
     };
   });
 
-export default function RecentDocuments() {
+export default function RecentDocuments({ name, filename }) {
+  // const { data: session, status } = useSession();
+
+  const handleDownload = async () => {
+    const response = await fetch(`/api/download/${filename}`);
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name; // Use the desired download name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error('Failed to download file:', response.status);
+      // Handle error (e.g., display a message to the user)
+    }
+  };
+
   return (
     <div className="space-y-4">
       {recentDocuments.map((doc, index) => (
@@ -90,12 +111,20 @@ export default function RecentDocuments() {
                     View Document
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Download PDF</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleDownload}>Download PDF</DropdownMenuItem>
                 <DropdownMenuItem>Share Document</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">
-                  Delete Document
-                </DropdownMenuItem>
+                    <DropdownMenuItem className="text-destructive">
+                      Delete Document
+                    </DropdownMenuItem>
+                {/* {session?.user.role === "ADMIN" && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="text-destructive">
+                      Delete Document
+                    </DropdownMenuItem>
+                  </>
+                )} */}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

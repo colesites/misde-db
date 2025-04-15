@@ -70,7 +70,7 @@ const FeatureCardItem = ({
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <div className="relative h-full border p-4 rounded-3xl md:p-6 bg-white shadow-xl">
+        <div className="relative h-full border p-4 rounded-3xl md:p-6 shadow-[9px_7px_175px_93px_rgba(198,_117,_21,_0.19)]">
           <GlowingEffect
             spread={50}
             glow={true}
@@ -82,7 +82,7 @@ const FeatureCardItem = ({
             <div className="relative flex flex-1 flex-col justify-between gap-4">
               <div className="w-fit rounded-lg p-3 bg-gray-100">{icon}</div>
               <div className="space-y-4">
-                <h3 className="text-2xl font-semibold leading-none tracking-tight text-blue-800">
+                <h3 className="text-2xl font-semibold leading-none tracking-tight text-orange-800">
                   {title}
                 </h3>
                 <h2 className="text-lg text-gray-700">{description}</h2>

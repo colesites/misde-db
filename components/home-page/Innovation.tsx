@@ -4,16 +4,25 @@ import React from "react";
 import { FeatureCard } from "./FeatureCard";
 import { AnimatedInnovationsCard } from "./AnimatedInnovationsCard";
 import { FocusCardsDemo } from "./FocusCardSDemo";
+import GradientText from "../GradientText";
 
 const Innovation = () => {
   return (
     <>
-      <div id="innovation" className="container mx-auto py-12 md:py-24">
+      <div
+        id="innovation"
+        className="container mx-auto py-12 md:py-24 bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1]"
+      >
         <div className="text-center space-y-20">
           <div>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-red-500">
+            <GradientText
+              colors={["#fb2c36", "#f59e0b", "#ea580c", "#b91c1c"]}
+              animationSpeed={3}
+              showBorder={false}
+              className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4"
+            >
               Innovation
-            </h2>
+            </GradientText>
 
             <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-20">
               Unleashing Creativity through the Power of Innovation. Discover

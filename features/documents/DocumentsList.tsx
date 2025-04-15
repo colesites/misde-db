@@ -24,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { documents, users } from "@/lib/mock-data";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 // Process documents with author information
 const documentsList = documents.map((doc) => {
@@ -46,15 +46,15 @@ const documentsList = documents.map((doc) => {
 });
 
 export default function DocumentsList() {
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
   const [userRole, setUserRole] = useState("PUBLIC");
   const [favorites, setFavorites] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (session?.user?.role) {
-      setUserRole(session.user.role);
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session?.user?.role) {
+  //     setUserRole(session.user.role);
+  //   }
+  // }, [session]);
 
   const isOfficial = userRole === "ADMIN" || userRole === "USER";
 

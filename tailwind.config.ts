@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: "class",
@@ -58,7 +58,8 @@ const config = {
           foreground: "hsl(var(--sidebar-foreground, var(--foreground)))",
           border: "hsl(var(--sidebar-border, var(--border)))",
           accent: "hsl(var(--sidebar-accent, var(--muted)))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground, var(--muted-foreground)))",
+          "accent-foreground":
+            "hsl(var(--sidebar-accent-foreground, var(--muted-foreground)))",
           ring: "hsl(var(--sidebar-ring, var(--ring)))",
         },
       },
@@ -87,15 +88,21 @@ const config = {
             "background-position": "0% 0%",
           },
         },
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shine: "shine var(--duration) infinite linear",
+        gradient: "gradient 8s linear infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

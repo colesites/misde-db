@@ -10,13 +10,13 @@ const inter = Inter({ subsets: ["latin"] });
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
-      <Session>
+      {/* <Session> */}
         <DashboardSidebar />
         <div className="w-full">
           <SidebarTrigger />
           {children}
         </div>
-      </Session>
+      {/* </Session> */}
     </SidebarProvider>
   );
 };

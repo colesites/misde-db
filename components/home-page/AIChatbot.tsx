@@ -84,7 +84,7 @@ export default function AIChatbot() {
     >
       <Card className="h-[500px] flex flex-col">
         <CardHeader>
-          <CardTitle>AI Assistant</CardTitle>
+          <CardTitle>MISDE Pilot</CardTitle>
           <CardDescription>
             Ask questions about government documents and research
           </CardDescription>

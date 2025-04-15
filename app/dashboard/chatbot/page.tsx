@@ -130,7 +130,7 @@ export default function ChatbotPage() {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">AI Assistant</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">MISDE Pilot</h1>
         <p className="text-muted-foreground">
           Ask questions about government documents, policies, or research papers
         </p>

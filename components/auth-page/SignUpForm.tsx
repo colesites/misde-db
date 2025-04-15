@@ -76,9 +76,10 @@ const SignUpForm = () => {
 
   // Submit handler for public users
   const onSubmitPublic = async (values: z.infer<typeof publicFormSchema>) => {
-    startTransition(() => {
-      registerUser(values);
-    });
+    // startTransition(() => {
+    //   registerUser(values);
+    // });
+    router.push("/dashboard");
   };
 
   // Submit handler for official users

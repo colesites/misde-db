@@ -24,29 +24,19 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-import { useSession, signOut } from "next-auth/react";
-import { useState, useEffect } from "react";
+// import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
-  const [userRole, setUserRole] = useState("PUBLIC");
-
-  useEffect(() => {
-    if (session?.user?.role) {
-      setUserRole(session.user.role);
-    }
-  }, [session]);
+  // const { data: session, status } = useSession();
 
   const isActive = (path: string) => {
     return pathname === path;
   };
 
-  const isOfficial = userRole === "ADMIN" || userRole === "USER";
-
   const handleLogout = () => {
-    signOut({ callbackUrl: "/" });
+    // signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -127,7 +117,7 @@ export default function DashboardSidebar() {
               >
                 <Link href="/dashboard/chatbot">
                   <MessageSquare />
-                  <span>AI Assistant</span>
+                  <span>MISDE Pilot</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -145,21 +135,9 @@ export default function DashboardSidebar() {
           </SidebarMenu>
         </SidebarGroup>
 
-        {isOfficial && (
-          <SidebarGroup>
+        <SidebarGroup>
             <SidebarGroupLabel>Admin</SidebarGroupLabel>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={isActive("/dashboard/users")}
-                >
-                  <Link href="/dashboard/users">
-                    <Users />
-                    <span>Users</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
@@ -173,7 +151,25 @@ export default function DashboardSidebar() {
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
-        )}
+
+        {/* {session?.user.role === "ADMIN" && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Admin</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive("/dashboard/settings")}
+                >
+                  <Link href="/dashboard/settings">
+                    <Settings />
+                    <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+        )} */}
       </SidebarContent>
 
       <SidebarFooter>

@@ -24,7 +24,7 @@ export const registerUser = async (
   const { firstName, lastName, email, password, confirmPassword } =
     validatedFields.data;
 
-  const name = firstName + lastName;
+  const name = firstName + " " + lastName;
 
   if (password !== confirmPassword) {
     throw new Error("Passwords do not match");

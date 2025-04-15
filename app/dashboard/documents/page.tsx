@@ -1,28 +1,42 @@
-import { Suspense } from "react"
-import Link from "next/link"
-import { Filter, Grid3X3, List, Plus, Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import DocumentsSkeleton from "@/features/documents/DocumentsSkeleton"
-import DocumentsList from "@/features/documents/DocumentsList"
-import DocumentsGrid from "@/features/documents/DocumentsGrid"
+import { Suspense } from "react";
+import Link from "next/link";
+import { Filter, Grid3X3, List, Plus, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DocumentsSkeleton from "@/features/documents/DocumentsSkeleton";
+import DocumentsList from "@/features/documents/DocumentsList";
+import DocumentsGrid from "@/features/documents/DocumentsGrid";
+import { auth } from "@/auth";
 
-export default function DocumentsPage() {
+export default async function DocumentsPage() {
+  const session = await auth();
+  
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Documents</h1>
-          <p className="text-muted-foreground">Browse and search government documents</p>
+          <p>{session?.user?.name}</p>
+          <p className="text-muted-foreground">
+            Browse and search government documents
+          </p>
         </div>
+        {session?.user.role === "ADMIN" && (
         <Button asChild>
           <Link href="/dashboard/documents/upload">
             <Plus className="mr-2 h-4 w-4" />
             <span>Upload Document</span>
           </Link>
         </Button>
+      )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-6">
@@ -97,7 +111,14 @@ export default function DocumentsPage() {
           <div className="rounded-lg border p-4">
             <h3 className="font-medium mb-3">Departments</h3>
             <div className="space-y-2">
-              {["All Departments", "Education", "Health", "Finance", "Technology", "Agriculture"].map((dept) => (
+              {[
+                "All Departments",
+                "Education",
+                "Health",
+                "Finance",
+                "Technology",
+                "Agriculture",
+              ].map((dept) => (
                 <div key={dept} className="flex items-center">
                   <input
                     type="checkbox"
@@ -144,7 +165,10 @@ export default function DocumentsPage() {
                 "Agriculture",
                 "Infrastructure",
               ].map((tag) => (
-                <div key={tag} className="bg-muted text-muted-foreground px-2 py-1 rounded-md text-xs">
+                <div
+                  key={tag}
+                  className="bg-muted text-muted-foreground px-2 py-1 rounded-md text-xs"
+                >
                   {tag}
                 </div>
               ))}
@@ -153,5 +177,5 @@ export default function DocumentsPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
